@@ -1,4 +1,4 @@
-# Menu Management API (Full README)
+# Menu Management API 
 
 Backend API for managing restaurant menus: Categories, Subcategories, Items, and Search.
 
@@ -104,6 +104,30 @@ eg: id: 6734f0010000000000000003
 
 - Create an environment with `baseUrl = http://localhost:3000` and `MONGO_URI` if you want to run any scripts that require DB connection (not necessary for simple API calls once the server is running locally).
 - Use the Create Category endpoint first to obtain a `categoryId` for creating subcategories and items.
-- The API returns JSON errors with status codes 400 (validation), 404 (not found), 409 (duplicate category name), and 500 (server error).
+
+
+
+
+## Short answers (added)
+
+1) Which database did you choose and why?
+
+- MongoDB (with Mongoose). Reason: menu data is hierarchical but flexible — categories, subcategories and items map naturally to documents with references. MongoDB reduces schema churn for optional fields (images, descriptions) and makes it easy to store relationships without complex joins.
+
+2) Three things learned from this assignment
+
+- Clear separation of routes, controllers, models and validators keeps the API maintainable and testable.
+- Mongoose lifecycle hooks (pre-save) are convenient for centralizing derived-data logic (e.g., computing item totals).
+- Joi is effective for keeping validation rules declarative and separate from business logic.
+
+3) What was the most difficult part of the assignment?
+
+- Designing endpoints and validation rules that allow both strict creation flows (required fields) and flexible updates (partial updates) without causing unexpected validation errors. Balancing ergonomics (PATCH-like partial updates) with explicitness (PUT full updates) required careful validator design.
+
+4) What I would have done differently given more time
+
+- Add pagination, sorting and filtering to list endpoints and limit results for search.
+- Add automated tests (Jest + Supertest) covering happy paths and error cases.
+- Provide OpenAPI/Swagger documentation and a ready-to-import Postman collection with example responses.
 
 
